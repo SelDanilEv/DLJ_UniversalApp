@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Infrastructure.Models.MenuItem>
+
+@{
+    Layout = "_Layout";
+}
+
+<p>
+    <a asp-action="CreateNewMenuItem">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Link.Area)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Link.Controller)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Link.Action)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Priority)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsBeta)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Link.Area)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Link.Controller)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Link.Action)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Priority)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsBeta)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "UpdateMenuItem", new { ID = item.ID }) |
+                @Html.ActionLink("Delete", "RemoveMenuItem", new { ID = item.ID })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
