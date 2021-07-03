@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Areas\Danil\wwwroot\icons\beta-version-icon.jpg" />
+    <None Remove="Areas\Danil\wwwroot\icons\gearGreen.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Areas\Danil\wwwroot\icons\beta-version-icon.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Areas\Danil\wwwroot\icons\gearGreen.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Danil\App_Code\" />
+    <Folder Include="Areas\Danil\Data\" />
+    <Folder Include="Areas\Danil\Data\Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DefenderServices\DefenderServices.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties tempdatabase_4menuitems_1json__JsonSchema="{" /></VisualStudio></ProjectExtensions>
+
+</Project>
