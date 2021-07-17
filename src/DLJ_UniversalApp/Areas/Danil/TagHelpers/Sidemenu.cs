@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace DLJ_UniversalApp.Areas.Danil.TagHelpers
 {
@@ -10,11 +11,15 @@ namespace DLJ_UniversalApp.Areas.Danil.TagHelpers
     {
         IMenuBuilderService _menuBuilderService;
         IHttpContextAccessor _httpContextAccessor;
-        public Sidemenu(IMenuBuilderService menuBuilderService, IHttpContextAccessor httpContextAccessor)
+        IConfiguration _configuration;
+
+        public Sidemenu(IMenuBuilderService menuBuilderService, IHttpContextAccessor httpContextAccessor, IConfiguration configuration)
         {
             _menuBuilderService = menuBuilderService;
             _httpContextAccessor = httpContextAccessor;
+            _configuration = configuration;
         }
+
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             output.TagName = "div";
@@ -33,7 +38,9 @@ namespace DLJ_UniversalApp.Areas.Danil.TagHelpers
                 {
                     var host = _httpContextAccessor.HttpContext.Request.Host.Value;
                     var scheme = _httpContextAccessor.HttpContext.Request.Scheme;
-                    var ifBeta = item.IsBeta ? $"<img class='beta_icon' src = '{scheme}://{host}/icons/gearGreen.png' />" : string.Empty;
+                    var betaImage = _configuration["Menu:BetaItemImage"];
+
+                    var ifBeta = item.IsBeta ? $"<img class='beta_icon' src = '{scheme}://{host}/icons/{betaImage}' />" : string.Empty;
                     if (!string.IsNullOrEmpty(item.Link.Area))
                     {
                         item.Link.Area = item.Link.Area + "/";

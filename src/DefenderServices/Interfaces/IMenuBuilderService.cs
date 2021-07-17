@@ -1,8 +1,6 @@
 ﻿using Infrastructure.Models;
 using Infrastructure.Results;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DefenderServices.Interfaces

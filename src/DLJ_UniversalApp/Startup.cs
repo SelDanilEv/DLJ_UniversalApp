@@ -3,14 +3,9 @@ using DefenderServices.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DLJ_UniversalApp
 {
@@ -28,7 +23,9 @@ namespace DLJ_UniversalApp
         {
             services.AddControllersWithViews();
             services.AddSingleton<IMenuBuilderService, MenuBuilderService>();
+            services.AddSingleton<IUserInfoService, UserInfoService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IConfiguration>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

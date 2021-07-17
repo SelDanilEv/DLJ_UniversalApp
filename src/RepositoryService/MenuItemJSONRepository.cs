@@ -5,32 +5,22 @@ using System.Threading.Tasks;
 using System.Text.Json;
 
 using Infrastructure.Results;
-using RepositoryService.Interfaces;
 using Infrastructure.Models;
 using System.Linq;
-using System.Collections;
 
 namespace RepositoryService
 {
-    public class DefenderJsonRepository : IDefenderRepository
+    public class MenuItemJSONRepository : BaseJSONRepository<MenuItem>
     {
-        private readonly string _menuItemPath = "TempDatabase/menuitems.json";
-
-        public DefenderJsonRepository()
+        public override async Task<IResultWithData<IList<MenuItem>>> GetItemsAsync()
         {
-        }
-
-        #region menu items
-        public async Task<IResultWithData<IList<MenuItem>>> GetMenuItemsAsync()
-        {
-            var menuItems = new List<MenuItem>();
-            var result = new Result<IList<MenuItem>>(menuItems);
+            var result = new Result<IList<MenuItem>>();
 
             try
             {
-                var jsonString = File.ReadAllText(_menuItemPath);
-                menuItems = JsonSerializer.Deserialize<List<MenuItem>>(jsonString);
-                result.Data = SortByPriority(menuItems);
+                var jsonString = await File.ReadAllTextAsync(_menuItemRepositoryPath);
+                var menuItems = JsonSerializer.Deserialize<List<MenuItem>>(jsonString);
+                result.Data = SortMenuItemsByPriority(menuItems);
             }
             catch (Exception e)
             {
@@ -41,9 +31,26 @@ namespace RepositoryService
             return result;
         }
 
-        public async Task<IResult> AddMenuItemsAsync(MenuItem newMenuItem)
+        public override async Task<IResultWithData<MenuItem>> GetItemAsync(int id)
         {
-            var menuItemsResult = await GetMenuItemsAsync();
+            var menuItemsResult = await GetItemsAsync();
+            var result = new Result<MenuItem>();
+
+            if (!menuItemsResult.IsSuccess)
+            {
+                result.Status = ResultStatus.Error;
+                result.Message = "Error when read menu items";
+                return result;
+            }
+
+            result.Data = menuItemsResult.GetData.FirstOrDefault(x => x.ID == id);
+
+            return result;
+        }
+
+        public override async Task<IResult> AddItemAsync(MenuItem newMenuItem)
+        {
+            var menuItemsResult = await GetItemsAsync();
             var result = new Result();
 
             if (!menuItemsResult.IsSuccess)
@@ -56,11 +63,11 @@ namespace RepositoryService
             try
             {
                 var menuItems = menuItemsResult.GetData;
-                newMenuItem.ID = GetId(menuItems);
+                newMenuItem.ID = FindMinimumFreeId(menuItems);
                 menuItems.Add(newMenuItem);
                 menuItems = SortById(menuItems);
                 var jsonString = JsonSerializer.Serialize(menuItems);
-                File.WriteAllText(_menuItemPath, jsonString);
+                File.WriteAllText(_menuItemRepositoryPath, jsonString);
             }
             catch (Exception e)
             {
@@ -71,9 +78,9 @@ namespace RepositoryService
             return result;
         }
 
-        public async Task<IResult> UpdateMenuItemsAsync(MenuItem updatedMenuItem)
+        public override async Task<IResult> UpdateItemAsync(MenuItem updatedMenuItem)
         {
-            var menuItemsResult = await GetMenuItemsAsync();
+            var menuItemsResult = await GetItemsAsync();
             var result = new Result();
 
             if (!menuItemsResult.IsSuccess)
@@ -92,7 +99,7 @@ namespace RepositoryService
                 itemToUpdate.IsBeta = updatedMenuItem.IsBeta;
                 itemToUpdate.Priority = updatedMenuItem.Priority;
                 var jsonString = JsonSerializer.Serialize(menuItems);
-                File.WriteAllText(_menuItemPath, jsonString);
+                File.WriteAllText(_menuItemRepositoryPath, jsonString);
             }
             catch (Exception e)
             {
@@ -103,9 +110,9 @@ namespace RepositoryService
             return result;
         }
 
-        public async Task<IResult> RemoveMenuItemsAsync(int id)
+        public override async Task<IResult> RemoveItemAsync (int id)
         {
-            var menuItemsResult = await GetMenuItemsAsync();
+            var menuItemsResult = await GetItemsAsync();
             var result = new Result();
 
             if (!menuItemsResult.IsSuccess)
@@ -118,9 +125,9 @@ namespace RepositoryService
             try
             {
                 var menuItems = menuItemsResult.GetData;
-                var itemToUpdate = menuItems.Remove(menuItems.First(x=> x.ID == id));
+                var itemToUpdate = menuItems.Remove(menuItems.First(x => x.ID == id));
                 var jsonString = JsonSerializer.Serialize(menuItems);
-                File.WriteAllText(_menuItemPath, jsonString);
+                File.WriteAllText(_menuItemRepositoryPath, jsonString);
             }
             catch (Exception e)
             {
@@ -130,34 +137,11 @@ namespace RepositoryService
 
             return result;
         }
-        #endregion
 
-        private int GetId<T>(IList<T> models) where T : BaseModel
+
+        private IList<MenuItem> SortMenuItemsByPriority(IList<MenuItem> unsortedList)
         {
-            int newId = models.Count;
-
-            int last = -1;
-            for (int i = 0; i < models.Count; i++)
-            {
-                if (last + 1 != models[i].ID)
-                {
-                    return i;
-                }
-                last++;
-            }
-
-            return newId;
-        }
-
-        private IList<T> SortById<T>(IList<T> unsortedList) where T : BaseModel
-        {
-            IEnumerable<T> sortedList = unsortedList.OrderBy(x => x.ID);
-            return sortedList.ToList();
-        }
-
-        private IList<T> SortByPriority<T>(IList<T> unsortedList) where T : MenuItem
-        {
-            IEnumerable<T> sortedList = unsortedList.OrderBy(x => -x.Priority);
+            var sortedList = unsortedList.OrderBy(x => -x.Priority);
             return sortedList.ToList();
         }
     }

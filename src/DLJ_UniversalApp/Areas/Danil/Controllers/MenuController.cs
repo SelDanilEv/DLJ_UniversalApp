@@ -1,9 +1,6 @@
 ﻿using DefenderServices.Interfaces;
 using Infrastructure.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DLJ_UniversalApp.Areas.Danil.Controllers
