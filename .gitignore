@@ -74,6 +74,9 @@ _[Ss]cripts
 *.ncrunchsolution
 *.dot[Cc]over
 
+.vs
+src/.vs
+
 #my git ignores
 passwords.txt
 appsettings.json
