@@ -73,3 +73,11 @@ _[Ss]cripts
 *.nupkg
 *.ncrunchsolution
 *.dot[Cc]over
+
+#my git ignores
+passwords.txt
+appsettings.json
+appsettings.Test.json
+appsettingsDevelopment..json
+
+
