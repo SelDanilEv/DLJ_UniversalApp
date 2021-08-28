@@ -81,6 +81,6 @@ src/.vs
 passwords.txt
 appsettings.json
 appsettings.Test.json
-appsettingsDevelopment..json
+appsettings.Development..json
 
 
