@@ -5,11 +5,18 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLJ_UniversalApp", "DLJ_UniversalApp\DLJ_UniversalApp.csproj", "{ED9F4326-A6A4-4F27-9B1E-8798E1E63CEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DefenderServices", "DefenderServices\DefenderServices.csproj", "{6B9A99C5-6E2A-4C90-8AAD-7041A3E25079}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DefenderServices", "DefenderServices\DefenderServices.csproj", "{6B9A99C5-6E2A-4C90-8AAD-7041A3E25079}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoryService", "RepositoryService\RepositoryService.csproj", "{40A9F6DB-299C-471B-9A04-955CB6D22771}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RepositoryService", "RepositoryService\RepositoryService.csproj", "{40A9F6DB-299C-471B-9A04-955CB6D22771}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{76188F28-E95B-402F-A832-1E395F68A061}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{76188F28-E95B-402F-A832-1E395F68A061}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6C28784B-9A1F-4FBE-9AFF-D723C4443430}"
+	ProjectSection(SolutionItems) = preProject
+		passwords.txt = passwords.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestsApp.Tests", "XUnitTestsApp.Tests\XUnitTestsApp.Tests.csproj", "{75470D5E-5476-4E16-870E-DAECB9ED5763}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +40,10 @@ Global
 		{76188F28-E95B-402F-A832-1E395F68A061}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76188F28-E95B-402F-A832-1E395F68A061}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76188F28-E95B-402F-A832-1E395F68A061}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75470D5E-5476-4E16-870E-DAECB9ED5763}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75470D5E-5476-4E16-870E-DAECB9ED5763}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75470D5E-5476-4E16-870E-DAECB9ED5763}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75470D5E-5476-4E16-870E-DAECB9ED5763}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

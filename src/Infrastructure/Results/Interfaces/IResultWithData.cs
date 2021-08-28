@@ -8,6 +8,8 @@ namespace Infrastructure.Results
     {
         bool IsSuccess { get; }
 
+        string Message { get; set; }
+
         T GetData { get; }
     }
 }

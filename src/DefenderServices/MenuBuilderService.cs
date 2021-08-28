@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using DefenderServices.Interfaces;
 using Infrastructure.Models;
+using Infrastructure.Options;
 using Infrastructure.Results;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using RepositoryService;
 using RepositoryService.Interfaces;
 
@@ -12,49 +13,45 @@ namespace DefenderServices
 {
     public class MenuBuilderService : IMenuBuilderService
     {
-        private IDefenderRepository _defenderRepository = new DefenderJsonRepository();
+        private IRepository<MenuItem> _menuItemRepository;
 
-        public async Task<IResultWithData<IList<MenuItem>>> GetAvailableMunuItems()
+        public MenuBuilderService(IOptions<MongoOptions> mongoOption)
         {
-            var menuItemsResult = await _defenderRepository.GetMenuItemsAsync();
+            _menuItemRepository = RepositoryFactory.CreateRepository<MenuItem>(mongoOption?.Value);
+        }
+
+        #region CRUD
+        public async Task<IResultWithData<IList<MenuItem>>> GetAvailableMenuItems()
+        {
+            var menuItemsResult = await _menuItemRepository.GetItemsAsync();
 
             return menuItemsResult;
         }
 
-        public async Task<IResultWithData<MenuItem>> GetMunuItemById(int id)
+        public async Task<IResultWithData<MenuItem>> GetMenuItemById(string id)
         {
-            var menuItemsResult = await _defenderRepository.GetMenuItemsAsync();
+            var menuItemResult = await _menuItemRepository.GetItemAsync(id);
 
-            var result = new Result<MenuItem>();
+            return menuItemResult;
+        }
 
-            if (menuItemsResult.IsSuccess)
-            {
-                result.Data = menuItemsResult.GetData.FirstOrDefault(x=> x.ID == id);
-            }
-            else
-            {
-                result.Status = ResultStatus.Error;
-            }
-
+        public async Task<IResult> AddMenuItems(MenuItem newMenuItem)
+        {
+            var result = await _menuItemRepository.AddItemAsync(newMenuItem);
             return result;
         }
 
-        public async Task<IResult> AddMunuItems(MenuItem newMenuItem)
+        public async Task<IResult> UpdateMenuItems(MenuItem newMenuItem)
         {
-            var result = await _defenderRepository.AddMenuItemsAsync(newMenuItem);
+            var result = await _menuItemRepository.UpdateItemAsync(newMenuItem);
             return result;
         }
 
-        public async Task<IResult> UpdateMunuItems(MenuItem newMenuItem)
+        public async Task<IResult> RemoveMenuItems(string id)
         {
-            var result = await _defenderRepository.UpdateMenuItemsAsync(newMenuItem);
+            var result = await _menuItemRepository.RemoveItemAsync(id);
             return result;
         }
-
-        public async Task<IResult> RemoveMunuItems(int id)
-        {
-            var result = await _defenderRepository.RemoveMenuItemsAsync(id);
-            return result;
-        }
+        #endregion
     }
 }

@@ -1,9 +1,6 @@
 ﻿using DefenderServices.Interfaces;
 using Infrastructure.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DLJ_UniversalApp.Areas.Danil.Controllers
@@ -20,7 +17,7 @@ namespace DLJ_UniversalApp.Areas.Danil.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var menuItemsResult = await menuBuilderService.GetAvailableMunuItems();
+            var menuItemsResult = await menuBuilderService.GetAvailableMenuItems();
             if (menuItemsResult.IsSuccess)
             {
                 return View(menuItemsResult.GetData);
@@ -37,14 +34,14 @@ namespace DLJ_UniversalApp.Areas.Danil.Controllers
         [HttpPost]
         public IActionResult CreateNewMenuItem(MenuItem menuItem)
         {
-            menuBuilderService.AddMunuItems(menuItem);
+            menuBuilderService.AddMenuItems(menuItem);
             return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateMenuItem(int id)
+        public async Task<IActionResult> UpdateMenuItem(string id)
         {
-            var menuItemResult = await menuBuilderService.GetMunuItemById(id);
+            var menuItemResult = await menuBuilderService.GetMenuItemById(id);
 
             if (menuItemResult.IsSuccess)
             {
@@ -57,14 +54,14 @@ namespace DLJ_UniversalApp.Areas.Danil.Controllers
         [HttpPost]
         public IActionResult UpdateMenuItemP(MenuItem menuItem)
         {
-            menuBuilderService.UpdateMunuItems(menuItem);
+            menuBuilderService.UpdateMenuItems(menuItem);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public async Task<IActionResult> RemoveMenuItem(int id)
+        public async Task<IActionResult> RemoveMenuItem(string id)
         {
-            var menuItemResult = await menuBuilderService.GetMunuItemById(id);
+            var menuItemResult = await menuBuilderService.GetMenuItemById(id);
 
             if (menuItemResult.IsSuccess)
             {
@@ -75,9 +72,9 @@ namespace DLJ_UniversalApp.Areas.Danil.Controllers
         }
 
         [HttpPost]
-        public IActionResult RemoveMenuItemP(int id)
+        public IActionResult RemoveMenuItemP(string id)
         {
-            menuBuilderService.RemoveMunuItems(id);
+            menuBuilderService.RemoveMenuItems(id);
             return RedirectToAction("Index");
         }
 
