@@ -4,11 +4,6 @@ using System.Text;
 
 namespace Infrastructure.Results
 {
-    public class Result : Result<string>
-    {
-
-    }
-
     public class Result<T> : IResultWithData<T>, IResult
     {
         public Result()
@@ -25,10 +20,15 @@ namespace Infrastructure.Results
 
         public string Message { get; set; }
 
-        public T Data { get; set; }
+        public T Data { private get; set; }
 
         public T GetData => Data;
 
         public bool IsSuccess => Status == ResultStatus.Success;
+    }
+
+    public class Result : Result<string>
+    {
+
     }
 }

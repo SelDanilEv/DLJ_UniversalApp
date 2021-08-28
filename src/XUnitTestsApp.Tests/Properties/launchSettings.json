@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "XUnitTestsApp.Tests": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Test"
+      },
+      "remoteDebugEnabled": true
+    }
+  }
+}

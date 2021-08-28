@@ -9,12 +9,12 @@ namespace DefenderServices.Interfaces
     {
         Task<IResultWithData<IList<UserInfo>>> GetUsers();
 
-        Task<IResultWithData<UserInfo>> GetUserById(int id);
+        Task<IResultWithData<UserInfo>> GetUserById(string id);
 
         Task<IResult> CreateUser(UserInfo newUserInfo);
 
         Task<IResult> UpdateUserInfo(UserInfo newUserInfo);
 
-        Task<IResult> RemoveUser(int id);
+        Task<IResult> RemoveUser(string id);
     }
 }

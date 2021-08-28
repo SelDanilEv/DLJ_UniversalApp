@@ -1,21 +1,26 @@
-﻿using Infrastructure.Models;
+﻿using System;
+
+using Infrastructure.Enums;
+using Infrastructure.Models;
 using Infrastructure.Models.User;
+using Infrastructure.Options;
+
 using RepositoryService.Interfaces;
-using System;
+using RepositoryService.Mongo;
 
 namespace RepositoryService
 {
     public static class RepositoryFactory
     {
-        public static IJSONRepository<T> CreateRepository<T>()
+        public static IRepository<T> CreateRepository<T>(MongoOptions mongoOption = null)
         {
             if (typeof(T) == typeof(MenuItem))
             {
-                return (IJSONRepository<T>)new MenuItemJSONRepository();
+                return (IRepository<T>)new MenuItemMongoRepository(mongoOption);
             }
             if (typeof(T) == typeof(UserInfo))
             {
-                return (IJSONRepository<T>)new UserJSONRepository();
+                return (IRepository<T>)new CommonMongoRepository<UserInfo>(mongoOption, MongoCollection.UserInfo);
             }
 
             throw new InvalidOperationException();

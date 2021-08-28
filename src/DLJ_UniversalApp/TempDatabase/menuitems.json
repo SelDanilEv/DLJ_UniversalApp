@@ -1,1 +1,0 @@
-[{"Name":"Defender Home","Link":{"Area":"danil","Controller":"home","Action":"index"},"IsBeta":true,"Priority":10,"ID":1},{"Name":"Menu manager","Link":{"Area":"danil","Controller":"menu","Action":"Index"},"IsBeta":true,"Priority":0,"ID":0}]

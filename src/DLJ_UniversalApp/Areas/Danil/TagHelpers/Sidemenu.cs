@@ -26,7 +26,7 @@ namespace DLJ_UniversalApp.Areas.Danil.TagHelpers
             output.Attributes.SetAttribute("id", "mySidenav");
             output.Attributes.SetAttribute("class", "sidenav");
             output.TagMode = TagMode.StartTagAndEndTag;
-            var menuItemsResult = await _menuBuilderService.GetAvailableMunuItems();
+            var menuItemsResult = await _menuBuilderService.GetAvailableMenuItems();
 
             StringBuilder outputHtml = new StringBuilder();
 

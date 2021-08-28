@@ -10,7 +10,7 @@ namespace DefenderServices
 {
     public class UserInfoService : IUserInfoService
     {
-        private IJSONRepository<UserInfo> _userInfoRepository;
+        private IRepository<UserInfo> _userInfoRepository;
 
         public UserInfoService()
         {
@@ -25,7 +25,7 @@ namespace DefenderServices
             return userInfoResult;
         }
 
-        public async Task<IResultWithData<UserInfo>> GetUserById(int id)
+        public async Task<IResultWithData<UserInfo>> GetUserById(string id)
         {
             var userInfoResult = await _userInfoRepository.GetItemAsync(id);
 
@@ -39,7 +39,7 @@ namespace DefenderServices
             return usersInfoResult;
         }
 
-        public async Task<IResult> RemoveUser(int id)
+        public async Task<IResult> RemoveUser(string id)
         {
             var userInfoResult = await _userInfoRepository.RemoveItemAsync(id);
 

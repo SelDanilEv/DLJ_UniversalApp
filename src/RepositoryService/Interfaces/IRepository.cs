@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Models;
 using Infrastructure.Results;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,12 +8,14 @@ using System.Threading.Tasks;
 
 namespace RepositoryService.Interfaces
 {
-    public interface IJSONRepository<Model>
+    public interface IRepository<Model>
     {
         Task<IResultWithData<IList<Model>>> GetItemsAsync();
-        Task<IResultWithData<Model>> GetItemAsync(int id);
+        Task<IResultWithData<IList<Model>>> GetItemsWithFilterAsync(FilterDefinition<Model> filter);
+        Task<IResultWithData<Model>> GetItemWithFilterAsync(FilterDefinition<Model> filter);
+        Task<IResultWithData<Model>> GetItemAsync(string id);
         Task<IResult> AddItemAsync(Model newMenuItem);
         Task<IResult> UpdateItemAsync(Model newMenuItem);
-        Task<IResult> RemoveItemAsync(int id);
+        Task<IResult> RemoveItemAsync(string id);
     }
 }
